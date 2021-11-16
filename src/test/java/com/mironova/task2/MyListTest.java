@@ -38,6 +38,8 @@ public class MyListTest {
         Integer[] testArray = {1, 2, 3, 6, 4};
         testList.add(3, 6);
         assertArrayEquals(testArray, testList.toArray());
+        assertThrows(IndexOutOfBoundsException.class, () ->
+                testList.add(-10, 0));
     }
 
     @Test
@@ -45,7 +47,7 @@ public class MyListTest {
         Integer[] testArray = {1, 2, 4};
         testList.remove(2);
         assertArrayEquals(testArray, testList.toArray());
-        assertThrows(UnsupportedOperationException.class, () ->
+        assertThrows(IndexOutOfBoundsException.class, () ->
                 testList.remove(10));
     }
 
@@ -61,7 +63,7 @@ public class MyListTest {
     public void getTest() {
         int element = 2;
         assertEquals(element, testList.get(1));
-        assertThrows(UnsupportedOperationException.class, () ->
+        assertThrows(IndexOutOfBoundsException.class, () ->
                 testList.get(10));
     }
 

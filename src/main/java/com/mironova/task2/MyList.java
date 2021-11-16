@@ -65,11 +65,13 @@ public class MyList<E> implements List<E> {
      */
     @Override
     public void add(int index, E e) {
-        if (index <= size) {
+        if (index <= size && index >=0) {
             resizeArray();
             System.arraycopy(arr, index, arr, index + 1, size);
             arr[index] = e;
             size++;
+        } else {
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -78,7 +80,7 @@ public class MyList<E> implements List<E> {
      */
     @Override
     public E remove(int index) {
-        if (index < size) {
+        if (index < size && index >= 0) {
             Object[] tmpArr = new Object[size - 1];
             E e = (E) arr[index];
             System.arraycopy(arr, 0, tmpArr, 0, index);
@@ -88,13 +90,8 @@ public class MyList<E> implements List<E> {
             size--;
             return e;
         } else {
-            throw new UnsupportedOperationException();
+            throw new IndexOutOfBoundsException();
         }
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        throw new UnsupportedOperationException();
     }
 
     /**
@@ -115,10 +112,10 @@ public class MyList<E> implements List<E> {
      */
     @Override
     public E get(int index) {
-        if (index < size) {
+        if (index < size && index >= 0) {
             return (E) arr[index];
         } else {
-            throw new UnsupportedOperationException();
+            throw new IndexOutOfBoundsException();
         }
     }
 
@@ -136,6 +133,11 @@ public class MyList<E> implements List<E> {
     public Object[] toArray() {
         arr = Arrays.copyOf(arr, size);
         return arr;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

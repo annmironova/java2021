@@ -52,14 +52,17 @@ public class MultithreadedTan {
             throw new Exception("Number of threads must be positive!");
         }
         List<Double> result = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(n);
         List<Future<Double>> futures = new ArrayList<>();
-        for (int i = 0; i < numbers.size(); i++) {
-            int finalI = i;
-            Future<Double> values = executor.submit(() -> tan(numbers.get(finalI)));
-            futures.add(values);
+        ExecutorService executor = Executors.newFixedThreadPool(n);
+        try {
+            for (int i = 0; i < numbers.size(); i++) {
+                int finalI = i;
+                Future<Double> values = executor.submit(() -> tan(numbers.get(finalI)));
+                futures.add(values);
+            }
+        } finally {
+            executor.shutdown();
         }
-        executor.shutdown();
         for (Future<Double> future : futures) {
             try {
                 result.add(future.get());
